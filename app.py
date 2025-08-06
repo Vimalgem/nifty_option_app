@@ -33,7 +33,7 @@ data = get_nifty_data()
 # ------------------ 📌 Latest Price ------------------
 if not data.empty:
     try:
-        latest_price = float(data['Close'].values[-1])
+        latest_price = float(data['Close'].values[-1].item())
         st.metric("📌 Latest Nifty Price", f"₹{latest_price:.2f}")
     except Exception as e:
         st.error(f"⚠️ Unable to extract latest price: {e}")
@@ -94,7 +94,7 @@ if not data.empty:
         df['ATR'] = df['TR'].rolling(window=14).mean()
 
         latest_atr = float(df['ATR'].dropna().values[-1])
-        latest_close = float(df['Close'].dropna().values[-1])
+        latest_close = float(df['Close'].dropna().values[-1].item())
 
         if signal == 1:  # Buy Signal
             target = latest_close + (multiplier * latest_atr)
